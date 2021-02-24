@@ -6,6 +6,6 @@ import './index.css';
 
 
 ReactDOM.render(
-  [<Game />,<Hook />],
+  [<Hook />],
   document.getElementById('root')
 );
