@@ -1,5 +1,6 @@
 import { apiUrl } from "config";
 import React, { FormEvent } from "react";
+
 const login = (param: { username: string; password: string }) => {
   fetch(`${apiUrl}/login`, {
     method: "POST",
