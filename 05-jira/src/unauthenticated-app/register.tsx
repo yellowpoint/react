@@ -5,10 +5,25 @@ import { Form, Input, Button } from "antd";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { register, user } = useAuth();
-  const handleSubmit = (values: { username: string; password: string }) => {
-    register(values);
+  const handleSubmit = ({
+    cpassword,
+    ...values
+  }: {
+    username: string;
+    password: string;
+    cpassword: string;
+  }) => {
+    if (cpassword !== values.password) {
+      onError(new Error("请确认两次输入的密码相同"));
+      return;
+    }
+    register(values).catch(onError);
   };
 
   return (
@@ -24,6 +39,12 @@ export const RegisterScreen = () => {
         rules={[{ required: true, message: "请输入密码" }]}
       >
         <Input placeholder="密码" type="password" id={"password"} />
+      </Form.Item>
+      <Form.Item
+        name="cpassword"
+        rules={[{ required: true, message: "请确认密码" }]}
+      >
+        <Input placeholder="确认密码" type="password" id={"cpassword"} />
       </Form.Item>
       <Form.Item>
         <Button htmlType="submit" type={"primary"}>

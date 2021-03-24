@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { cleanObject } from "utils";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
+import { useAsync } from "utils/use-async";
 // interface Base {
 //   id: number
 // }
@@ -18,12 +19,16 @@ import { Form, Input, Button } from "antd";
 // test(a)
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const LoginScreen = () => {
+export const LoginScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { login, user } = useAuth();
-
+  const { run, isLoading } = useAsync();
   // HTMLFormElement extends Element
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+    run(login(values).catch(onError));
   };
 
   return (
@@ -41,7 +46,7 @@ export const LoginScreen = () => {
         <Input placeholder="密码" type="password" id={"password"} />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" type={"primary"}>
+        <Button loading={isLoading} htmlType="submit" type={"primary"}>
           登录
         </Button>
       </Form.Item>
