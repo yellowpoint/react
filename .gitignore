@@ -2,3 +2,4 @@ node_modules
 .project
 .vscode
 yarn.lock
+.DS_Store

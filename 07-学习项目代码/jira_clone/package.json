@@ -1,0 +1,21 @@
+{
+  "name": "jira_clone",
+  "version": "1.0.0",
+  "author": "Ivor Reic",
+  "license": "MIT",
+  "scripts": {
+    "pre-commit": "cd api && npm run pre-commit && cd ../client && npm run pre-commit",
+    "install-dependencies": "cnpm install && cd api && cnpm install && cd ../client && cnpm install",
+    "build": "cd api && npm run build && cd ../client && npm run build",
+    "start": "cd api && npm run start:production && cd ../client && npm run start:production"
+  },
+  "devDependencies": {
+    "husky": "^4.0.0-beta.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
+  },
+  "dependencies": {}
+}
